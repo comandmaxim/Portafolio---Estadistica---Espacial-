@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portafolio Académico de Estadística Espacial de Ronald Alex Diaz Pari.">
+  <meta name="author" content="Ronald Alex Diaz Pari">
+  <title>Estadística Espacial | Ronald Alex Diaz Pari</title>
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef3f8;
+      --ink: #142033;
+      --muted: #667085;
+      --line: #dce3ec;
+      --primary: #0f5f5b;
+      --primary-dark: #0a4542;
+      --primary-soft: #dff4f1;
+      --accent: #db8f2f;
+      --accent-soft: #fff2dc;
+      --danger: #bb2d3b;
+      --danger-soft: #fde7ea;
+      --success: #18794e;
+      --shadow-sm: 0 8px 24px rgba(20, 32, 51, 0.07);
+      --shadow-lg: 0 24px 70px rgba(20, 32, 51, 0.18);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 30px;
+      --max-width: 1180px;
+      --transition: 180ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(15, 95, 91, 0.08), transparent 28rem),
+        radial-gradient(circle at 92% 16%, rgba(219, 143, 47, 0.08), transparent 25rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    svg {
+      display: block;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max-width));
+      margin-inline: auto;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 2000;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      transform: translateY(-150%);
+      transition: transform var(--transition);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    /* Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(220, 227, 236, 0.82);
+      background: rgba(245, 247, 251, 0.86);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(15, 95, 91, 0.25);
+    }
+
+    .brand-mark svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .brand-copy {
+      line-height: 1.15;
+    }
+
+    .brand-copy small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      padding: 10px 13px;
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      background: var(--surface);
+      color: var(--ink);
+      outline: none;
+    }
+
+    .nav-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 5px;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 9px 22px rgba(15, 95, 91, 0.2);
+      transition: transform var(--transition), background var(--transition);
+    }
+
+    .nav-add:hover,
+    .nav-add:focus-visible {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-add svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 72px 0 44px;
+    }
+
+    .hero-shell {
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+      gap: 52px;
+      align-items: center;
+      padding: clamp(34px, 6vw, 76px);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, #113c44 0%, #0f5f5b 54%, #16736c 100%);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      isolation: isolate;
+    }
+
+    .hero-shell::before,
+    .hero-shell::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .hero-shell::before {
+      width: 420px;
+      height: 420px;
+      top: -190px;
+      right: -120px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow:
+        0 0 0 42px rgba(255, 255, 255, 0.04),
+        0 0 0 86px rgba(255, 255, 255, 0.035);
+    }
+
+    .hero-shell::after {
+      width: 260px;
+      height: 260px;
+      bottom: -145px;
+      left: 38%;
+      background: rgba(219, 143, 47, 0.18);
+      filter: blur(4px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 22px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09);
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f3b65d;
+      box-shadow: 0 0 0 5px rgba(243, 182, 93, 0.16);
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3.1rem, 8vw, 6.8rem);
+      line-height: 0.91;
+      letter-spacing: -0.075em;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: #f3b65d;
+    }
+
+    .hero-subtitle {
+      max-width: 660px;
+      margin: 28px 0 0;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 17px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .btn svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: var(--primary-dark);
+    }
+
+    .btn-light:hover,
+    .btn-light:focus-visible {
+      background: #f8fafc;
+    }
+
+    .btn-ghost-light {
+      border-color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .btn-ghost-light:hover,
+    .btn-ghost-light:focus-visible {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .stats-card {
+      position: relative;
+      display: grid;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+    }
+
+    .stats-card h2 {
+      margin: 0 0 4px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .stat-box {
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-value {
+      display: block;
+      font-size: clamp(2.3rem, 5vw, 3.7rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.055em;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 9px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.085em;
+      text-transform: uppercase;
+    }
+
+    .progress-block {
+      padding: 18px 20px 6px;
+    }
+
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.83rem;
+      font-weight: 750;
+    }
+
+    .progress-track {
+      height: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #f3b65d;
+      transition: width 320ms ease;
+    }
+
+    /* Sections */
+    section {
+      scroll-margin-top: 92px;
+    }
+
+    .section {
+      padding: 52px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 25px;
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .section-heading p {
+      max-width: 560px;
+      margin: 10px 0 0;
+      color: var(--muted);
+    }
+
+    .section-count {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    /* About */
+    .about-card {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .profile-panel {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 330px;
+      padding: 38px;
+      background:
+        radial-gradient(circle at 70% 20%, rgba(243, 182, 93, 0.33), transparent 7rem),
+        linear-gradient(145deg, #0f5f5b, #113c44);
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .profile-panel::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      z-index: -1;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      display: grid;
+      place-items: center;
+      border: 8px solid rgba(255, 255, 255, 0.14);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.11);
+      color: #fff;
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-panel small {
+      align-self: end;
+      color: rgba(255, 255, 255, 0.66);
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .about-content {
+      padding: clamp(28px, 5vw, 54px);
+    }
+
+    .about-content h3 {
+      margin: 0;
+      font-size: clamp(1.75rem, 4vw, 2.7rem);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    .about-intro {
+      max-width: 720px;
+      margin: 16px 0 28px;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .info-item {
+      min-width: 0;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--bg);
+    }
+
+    .info-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.095em;
+      text-transform: uppercase;
+    }
+
+    .info-value {
+      display: block;
+      overflow-wrap: anywhere;
+      font-weight: 820;
+    }
+
+    /* Unit cards */
+    .unit-shell {
+      position: relative;
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .work-card {
+      position: relative;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: 0 10px 28px rgba(20, 32, 51, 0.055);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .work-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(15, 95, 91, 0.32);
+      box-shadow: 0 18px 38px rgba(20, 32, 51, 0.1);
+    }
+
+    .card-topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .work-code {
+      display: inline-flex;
+      max-width: calc(100% - 48px);
+      padding: 6px 9px;
+      border-radius: 8px;
+      background: var(--surface-soft);
+      color: var(--primary-dark);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.73rem;
+      font-weight: 850;
+      overflow-wrap: anywhere;
+    }
+
+    .delete-btn {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color var(--transition), background var(--transition);
+    }
+
+    .delete-btn:hover,
+    .delete-btn:focus-visible {
+      background: var(--danger-soft);
+      color: var(--danger);
+      outline: none;
+    }
+
+    .delete-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .work-card h3 {
+      margin: 19px 0 9px;
+      font-size: 1.24rem;
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      overflow-wrap: anywhere;
+    }
+
+    .work-description {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 18px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tag {
+      max-width: 100%;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #855313;
+      font-size: 0.72rem;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .resource-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 2px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 760;
+    }
+
+    .resource-line svg {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      color: var(--primary);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 14px;
+      color: var(--success);
+      font-size: 0.77rem;
+      font-weight: 850;
+    }
+
+    .status-pill.pending {
+      color: #946200;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 13%, transparent);
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .card-btn {
+      min-width: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 820;
+      cursor: pointer;
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .card-btn:hover,
+    .card-btn:focus-visible {
+      border-color: rgba(15, 95, 91, 0.35);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      outline: none;
+    }
+
+    .card-btn.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .card-btn.primary:hover,
+    .card-btn.primary:focus-visible {
+      background: var(--primary-dark);
+      color: #fff;
+    }
+
+    .card-btn.icon-only {
+      width: 42px;
+      padding-inline: 0;
+    }
+
+    .card-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .empty-state {
+      min-height: 270px;
+      display: grid;
+      place-items: center;
+      padding: 36px 24px;
+      border: 2px dashed #cfd8e3;
+      border-radius: 18px;
+      background: rgba(245, 247, 251, 0.65);
+      text-align: center;
+    }
+
+    .empty-state[hidden] {
+      display: none;
+    }
+
+    .empty-icon {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 17px;
+      border-radius: 20px;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .empty-icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .empty-state h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      letter-spacing: -0.025em;
+    }
+
+    .empty-state p {
+      max-width: 450px;
+      margin: 8px auto 18px;
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .empty-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--primary-dark);
+      font-weight: 830;
+      box-shadow: 0 8px 20px rgba(20, 32, 51, 0.08);
+      cursor: pointer;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 40px 0 48px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 25px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    .footer a {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(9, 19, 31, 0.62);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--transition), visibility var(--transition);
+    }
+
+    .modal.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-dialog {
+      width: min(760px, 100%);
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(14px) scale(0.985);
+      transition: transform var(--transition);
+    }
+
+    .modal.open .modal-dialog {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 26px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 1.55rem;
+      line-height: 1.2;
+      letter-spacing: -0.04em;
+    }
+
+    .modal-header p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .modal-close {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus-visible {
+      background: var(--surface-soft);
+      outline: none;
+    }
+
+    .modal-close svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .work-form {
+      padding: 24px 26px 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label,
+    .field legend {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .field input,
+    .field select {
+      min-height: 46px;
+      padding: 10px 12px;
+    }
+
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      padding: 12px;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(15, 95, 91, 0.11);
+    }
+
+    .field-help {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.74rem;
+    }
+
+    .resource-choice {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .choice-label {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--bg);
+      cursor: pointer;
+      font-size: 0.83rem;
+      font-weight: 780;
+    }
+
+    .choice-label:has(input:checked) {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
+    .choice-label input {
+      width: 17px;
+      height: 17px;
+      min-height: auto;
+      margin: 0;
+      accent-color: var(--primary);
+    }
+
+    .file-box {
+      position: relative;
+      min-height: 100px;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      border: 2px dashed #c8d3df;
+      border-radius: 14px;
+      background: var(--bg);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+    }
+
+    .file-box:hover,
+    .file-box:focus-within {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .file-box input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      padding: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-box strong {
+      display: block;
+      color: var(--primary-dark);
+      font-size: 0.88rem;
+    }
+
+    .file-box span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    .file-warning {
+      margin-top: 8px;
+      color: #8a5b05;
+      font-size: 0.74rem;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--bg);
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      min-height: auto;
+      accent-color: var(--primary);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .form-error {
+      display: none;
+      margin: 18px 0 0;
+      padding: 12px 14px;
+      border: 1px solid #f4b8c0;
+      border-radius: 11px;
+      background: var(--danger-soft);
+      color: #8e1f2d;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+      background: var(--surface-soft);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+      background: var(--primary-dark);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
+    /* Resource preview */
+    .preview-modal .modal-dialog {
+      width: min(1050px, 100%);
+    }
+
+    .preview-body {
+      min-height: 420px;
+      padding: 18px;
+      background: #eef2f6;
+    }
+
+    .preview-frame,
+    .preview-image,
+    .preview-video {
+      width: 100%;
+      max-height: calc(100vh - 190px);
+      border: 0;
+      border-radius: 14px;
+      background: #fff;
+      object-fit: contain;
+    }
+
+    .preview-frame {
+      min-height: 65vh;
+    }
+
+    .preview-fallback {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      border-radius: 14px;
+      background: #fff;
+      text-align: center;
+    }
+
+    .preview-fallback h3 {
+      margin: 0;
+    }
+
+    .preview-fallback p {
+      max-width: 500px;
+      margin: 9px auto 18px;
+      color: var(--muted);
+    }
+
+    /* Toast */
+    .toast-region {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 1500;
+      display: grid;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      max-width: min(390px, calc(100vw - 36px));
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      color: var(--ink);
+      box-shadow: var(--shadow-lg);
+      animation: toast-in 240ms ease both;
+      pointer-events: auto;
+    }
+
+    .toast.success {
+      border-color: #addfc7;
+    }
+
+    .toast.error {
+      border-color: #f2b6be;
+    }
+
+    .toast-icon {
+      flex: 0 0 auto;
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .toast.error .toast-icon {
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .toast p {
+      margin: 1px 0 0;
+      font-size: 0.84rem;
+      font-weight: 720;
+    }
+
+    @keyframes toast-in {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .nav-links a {
+        display: none;
+      }
+
+      .hero-shell {
+        min-height: auto;
+        grid-template-columns: 1fr;
+      }
+
+      .stats-card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stats-card h2,
+      .progress-block {
+        grid-column: 1 / -1;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        padding-top: 28px;
+      }
+
+      .hero-shell {
+        border-radius: 22px;
+      }
+
+      .about-card {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-panel {
+        min-height: 260px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+      }
+
+      .form-grid,
+      .resource-choice {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        width: min(calc(100% - 22px), var(--max-width));
+      }
+
+      .site-header .brand-copy small,
+      .nav-add span {
+        display: none;
+      }
+
+      .nav-add {
+        width: 42px;
+        height: 42px;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .hero-shell {
+        padding: 28px 22px;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.9rem, 16vw, 4.5rem);
+      }
+
+      .stats-card {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-card h2,
+      .progress-block {
+        grid-column: auto;
+      }
+
+      .section {
+        padding: 38px 0;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-count {
+        display: inline-flex;
+        margin-top: 14px;
+      }
+
+      .info-grid,
+      .works-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .unit-shell {
+        padding: 16px;
+      }
+
+      .modal {
+        padding: 0;
+        place-items: stretch;
+      }
+
+      .modal-dialog {
+        width: 100%;
+        max-height: 100vh;
+        min-height: 100vh;
+        border-radius: 0;
+      }
+
+      .modal-header,
+      .work-form {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .form-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        display: block;
+      }
+
+      .footer-inner a {
+        display: inline-block;
+        margin-top: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19V9m6 10V5m6 14v-7m4 7H2" />
+          </svg>
+        </span>
+        <span class="brand-copy">
+          Estadística Espacial
+          <small>Portafolio EST334</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#unidad-1">Unidad I</a>
+        <a href="#unidad-2">Unidad II</a>
+        <button class="nav-add" type="button" data-open-add aria-label="Agregar nuevo trabajo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          <span>Agregar trabajo</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <section class="hero" id="inicio">
+      <div class="container">
+        <div class="hero-shell">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-dot"></span> Curso EST334 · 2026-I</p>
+            <h1>Estadística <span>Espacial</span></h1>
+            <p class="hero-subtitle">
+              Portafolio académico de análisis, prácticas y recursos del curso de Estadística Espacial de la Universidad Nacional del Altiplano.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-light" href="#unidad-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14m0 0 6-6m-6 6-6-6" />
+                </svg>
+                Explorar trabajos
+              </a>
+              <button class="btn btn-ghost-light" type="button" data-open-add>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                Agregar nuevo trabajo
+              </button>
+            </div>
+          </div>
+
+          <aside class="stats-card" aria-label="Resumen del portafolio">
+            <h2>Resumen del portafolio</h2>
+            <div class="stat-box">
+              <strong class="stat-value" id="totalTasks">0</strong>
+              <span class="stat-label">Total tareas</span>
+            </div>
+            <div class="stat-box">
+              <strong class="stat-value" id="completedTasks">0</strong>
+              <span class="stat-label">Tareas completadas</span>
+            </div>
+            <div class="progress-block">
+              <div class="progress-copy">
+                <span>Progreso registrado</span>
+                <span id="progressText">0%</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Progreso de trabajos completados" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre-mi">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Perfil académico</p>
+            <h2>Sobre mí</h2>
+          </div>
+        </div>
+
+        <article class="about-card">
+          <div class="profile-panel">
+            <div class="avatar" aria-label="Iniciales de Ronald Alex Diaz Pari">RD</div>
+            <small>Autor del portafolio</small>
+          </div>
+
+          <div class="about-content">
+            <h3>Ronald Alex Diaz Pari</h3>
+            <p class="about-intro">
+              Estudiante de Estadística e Informática con interés en el análisis espacial, la visualización de datos geográficos y la aplicación de métodos estadísticos para estudiar fenómenos territoriales.
+            </p>
+
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Carrera</span>
+                <span class="info-value">Estadística e Informática</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Universidad</span>
+                <span class="info-value">Universidad Nacional del Altiplano (UNAP)</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Ciudad</span>
+                <span class="info-value">Puno, Perú</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Curso</span>
+                <span class="info-value">EST334 · Estadística Espacial</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="unidad-1">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">I</p>
+            <h2>Unidad I</h2>
+            <p>Trabajos, prácticas, informes y recursos correspondientes a la primera unidad.</p>
+          </div>
+          <span class="section-count" id="unit1Count">0 trabajos</span>
+        </div>
+
+        <div class="unit-shell">
+          <div class="works-grid" id="unit1Grid" aria-live="polite"></div>
+          <div class="empty-state" id="unit1Empty">
+            <div>
+              <div class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H10l2 2h5.5A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-10Z" />
+                  <path d="M12 10v5m-2.5-2.5h5" />
+                </svg>
+              </div>
+              <h3>Aún no has agregado trabajos a esta unidad</h3>
+              <p>Usa el formulario para registrar tu primera tarea, práctica, archivo o enlace externo.</p>
+              <button class="empty-add" type="button" data-open-add data-unit="I">+ Agregar Nuevo Trabajo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="unidad-2">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">II</p>
+            <h2>Unidad II</h2>
+            <p>Trabajos, prácticas, informes y recursos correspondientes a la segunda unidad.</p>
+          </div>
+          <span class="section-count" id="unit2Count">0 trabajos</span>
+        </div>
+
+        <div class="unit-shell">
+          <div class="works-grid" id="unit2Grid" aria-live="polite"></div>
+          <div class="empty-state" id="unit2Empty">
+            <div>
+              <div class="empty-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H10l2 2h5.5A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5v-10Z" />
+                  <path d="M12 10v5m-2.5-2.5h5" />
+                </svg>
+              </div>
+              <h3>Aún no has agregado trabajos a esta unidad</h3>
+              <p>Usa el formulario para registrar tu primera tarea, práctica, archivo o enlace externo.</p>
+              <button class="empty-add" type="button" data-open-add data-unit="II">+ Agregar Nuevo Trabajo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span><strong>Ronald Alex Diaz Pari</strong> · Portafolio de Estadística Espacial</span>
+      <a href="#inicio">Volver al inicio ↑</a>
+    </div>
+  </footer>
+
+  <!-- Modal: agregar trabajo -->
+  <div class="modal" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 id="addModalTitle">+ Agregar Nuevo Trabajo</h2>
+          <p>Usa rutas relativas de archivos incluidos en el repositorio. Los registros creados aquí son una vista previa local.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-add aria-label="Cerrar formulario">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 6 12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+
+      <form class="work-form" id="workForm" novalidate>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="title">Título de la tarea o trabajo <span class="required">*</span></label>
+            <input id="title" name="title" type="text" maxlength="120" autocomplete="off" placeholder="Ej. Análisis del Índice de Moran" required>
+          </div>
+
+          <div class="field">
+            <label for="code">Identificador / Código <span class="required">*</span></label>
+            <input id="code" name="code" type="text" maxlength="50" autocomplete="off" placeholder="Ej. tarea-01" pattern="[A-Za-z0-9_-]+" required>
+            <span class="field-help">Usa letras, números, guion o guion bajo.</span>
+          </div>
+
+          <div class="field">
+            <label for="unit">Unidad <span class="required">*</span></label>
+            <select id="unit" name="unit" required>
+              <option value="I">Unidad I</option>
+              <option value="II">Unidad II</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="description">Breve descripción <span class="required">*</span></label>
+            <textarea id="description" name="description" maxlength="500" placeholder="Resume el contenido, el objetivo o el resultado principal del trabajo." required></textarea>
+          </div>
+
+          <div class="field full">
+            <label for="tags">Etiquetas / Tags</label>
+            <input id="tags" name="tags" type="text" maxlength="250" autocomplete="off" placeholder="autocorrelación, moran, pdf">
+            <span class="field-help">Separa cada etiqueta con una coma.</span>
+          </div>
+
+          <fieldset class="field full resource-choice">
+            <legend>Tipo de recurso <span class="required">*</span></legend>
+            <label class="choice-label">
+              <input type="radio" name="resourceType" value="file" checked>
+              Archivo local
+            </label>
+            <label class="choice-label">
+              <input type="radio" name="resourceType" value="link">
+              Enlace externo
+            </label>
+          </fieldset>
+
+          <div class="field full" id="fileField">
+            <label for="resourcePath">Ruta relativa dentro del repositorio <span class="required">*</span></label>
+            <input id="resourcePath" name="resourcePath" type="text" autocomplete="off"
+              placeholder="./articulos/documento.pdf" aria-describedby="fileStorageWarning">
+            <span class="field-help">Ejemplos: ./articulos/informe.pdf, ./media/mapa.png o documentos/practica-01.docx</span>
+            <div class="file-warning" id="fileStorageWarning">
+              El archivo debe existir en el repositorio y respetar exactamente mayúsculas, minúsculas, extensión y carpetas. No uses C:\, file:// ni rutas que empiecen con /.
+            </div>
+          </div>
+
+          <div class="field full" id="linkField" hidden>
+            <label for="externalLink">Enlace externo <span class="required">*</span></label>
+            <input id="externalLink" name="externalLink" type="url" inputmode="url" placeholder="https://...">
+            <span class="field-help">Admite recursos como Shiny, YouTube, Google Drive, GitHub u otros sitios HTTPS.</span>
+          </div>
+
+          <div class="field full">
+            <div class="checkbox-row">
+              <input id="completed" name="completed" type="checkbox" checked>
+              <label for="completed">Marcar este trabajo como completado</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-error" id="formError" role="alert"></div>
+
+        <div class="form-actions">
+          <button class="btn btn-secondary" type="button" data-close-add>Cancelar</button>
+          <button class="btn btn-primary" id="saveWorkBtn" type="submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+            Agregar trabajo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: vista previa -->
+  <div class="modal preview-modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <h2 id="previewTitle">Vista previa</h2>
+          <p id="previewSubtitle">Recurso del portafolio</p>
+        </div>
+        <button class="modal-close" type="button" data-close-preview aria-label="Cerrar vista previa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m6 6 12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+      <div class="preview-body" id="previewBody"></div>
+    </div>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    "use strict";
+
+    const DB_NAME = "ronald-estadistica-espacial-portfolio";
+    const DB_VERSION = 1;
+    const STORE_NAME = "works";
+
+    /*
+      TRABAJOS PÚBLICOS
+      -----------------
+      GitHub Pages solo publica archivos que existen en el repositorio.
+      Agrega aquí los trabajos que deben visualizar todos los visitantes y luego ejecuta git push.
+
+      Ejemplo de archivo del repositorio:
+      {
+        id: "u1-moran",
+        title: "Análisis del Índice de Moran",
+        code: "tarea-01",
+        unit: "I",
+        description: "Aplicación de autocorrelación espacial global.",
+        tags: ["Moran", "autocorrelación", "PDF"],
+        completed: true,
+        resourceType: "file",
+        resourcePath: "./articulos/indice-moran.pdf",
+        fileName: "indice-moran.pdf",
+        fileType: "application/pdf",
+        sortOrder: 100
+      }
+
+      Ejemplo de enlace externo:
+      {
+        id: "u2-app-shiny",
+        title: "Aplicación Shiny",
+        code: "app-01",
+        unit: "II",
+        description: "Aplicación interactiva del curso.",
+        tags: ["Shiny", "R"],
+        completed: true,
+        resourceType: "link",
+        externalLink: "https://ejemplo.com",
+        sortOrder: 90
+      }
+    */
+    const PUBLIC_WORKS = [
+      // Pega aquí tus objetos de trabajos públicos.
+    ];
+
+    const state = {
+      works: [],
+      db: null,
+      lastFocusedElement: null
+    };
+
+    const dom = {
+      addModal: document.getElementById("addModal"),
+      previewModal: document.getElementById("previewModal"),
+      workForm: document.getElementById("workForm"),
+      title: document.getElementById("title"),
+      code: document.getElementById("code"),
+      unit: document.getElementById("unit"),
+      description: document.getElementById("description"),
+      tags: document.getElementById("tags"),
+      fileField: document.getElementById("fileField"),
+      linkField: document.getElementById("linkField"),
+      resourcePath: document.getElementById("resourcePath"),
+      externalLink: document.getElementById("externalLink"),
+      completed: document.getElementById("completed"),
+      formError: document.getElementById("formError"),
+      saveWorkBtn: document.getElementById("saveWorkBtn"),
+      unit1Grid: document.getElementById("unit1Grid"),
+      unit2Grid: document.getElementById("unit2Grid"),
+      unit1Empty: document.getElementById("unit1Empty"),
+      unit2Empty: document.getElementById("unit2Empty"),
+      unit1Count: document.getElementById("unit1Count"),
+      unit2Count: document.getElementById("unit2Count"),
+      totalTasks: document.getElementById("totalTasks"),
+      completedTasks: document.getElementById("completedTasks"),
+      progressText: document.getElementById("progressText"),
+      progressBar: document.getElementById("progressBar"),
+      progressTrack: document.getElementById("progressTrack"),
+      previewTitle: document.getElementById("previewTitle"),
+      previewSubtitle: document.getElementById("previewSubtitle"),
+      previewBody: document.getElementById("previewBody"),
+      toastRegion: document.getElementById("toastRegion")
+    };
+
+    const icons = {
+      trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16m-10 4v6m4-6v6M9 7l1-2h4l1 2m3 0-1 13H7L6 7"/></svg>`,
+      link: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></svg>`,
+      file: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></svg>`,
+      eye: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg>`,
+      external: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 5h5v5M10 14 19 5M19 14v5H5V5h5"/></svg>`,
+      download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14"/></svg>`
+    };
+
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            const store = db.createObjectStore(STORE_NAME, { keyPath: "id" });
+            store.createIndex("unit", "unit", { unique: false });
+            store.createIndex("sortOrder", "sortOrder", { unique: false });
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error || new Error("No se pudo abrir IndexedDB."));
+        request.onblocked = () => reject(new Error("La base de datos está bloqueada por otra pestaña."));
+      });
+    }
+
+    function getAllWorks() {
+      return new Promise((resolve, reject) => {
+        const transaction = state.db.transaction(STORE_NAME, "readonly");
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.getAll();
+
+        request.onsuccess = () => resolve(request.result || []);
+        request.onerror = () => reject(request.error || new Error("No se pudieron leer los trabajos."));
+      });
+    }
+
+    function saveWork(work) {
+      return new Promise((resolve, reject) => {
+        const transaction = state.db.transaction(STORE_NAME, "readwrite");
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.add(work);
+
+        request.onsuccess = () => resolve(work);
+        request.onerror = () => reject(request.error || new Error("No se pudo guardar el trabajo."));
+      });
+    }
+
+    function removeWork(id) {
+      return new Promise((resolve, reject) => {
+        const transaction = state.db.transaction(STORE_NAME, "readwrite");
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.delete(id);
+
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error || new Error("No se pudo eliminar el trabajo."));
+      });
+    }
+
+    function createId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return `work-${Math.random().toString(36).slice(2)}-${performance.now().toString(36)}`;
+    }
+
+    function sanitizeText(value) {
+      return String(value ?? "").trim();
+    }
+
+    function normalizeTags(rawTags) {
+      return rawTags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean)
+        .filter((tag, index, array) => array.findIndex((item) => item.toLowerCase() === tag.toLowerCase()) === index)
+        .slice(0, 12);
+    }
+
+    function normalizeUrl(rawUrl) {
+      const url = new URL(rawUrl);
+      if (!["http:", "https:"].includes(url.protocol)) {
+        throw new Error("El enlace debe utilizar HTTP o HTTPS.");
+      }
+      return url.href;
+    }
+
+    function normalizeResourcePath(rawPath) {
+      let path = sanitizeText(rawPath).replaceAll("\\", "/");
+
+      if (!path) {
+        throw new Error("Ingresa la ruta relativa del archivo dentro del repositorio.");
+      }
+
+      if (/^(?:[A-Za-z]:\/|file:\/\/|https?:\/\/|\/)/i.test(path)) {
+        throw new Error("Usa una ruta relativa, por ejemplo ./articulos/documento.pdf.");
+      }
+
+      const cleanParts = path.split("/").filter((part) => part && part !== ".");
+      if (!cleanParts.length || cleanParts.includes("..")) {
+        throw new Error("La ruta no puede estar vacía ni contener '..'.");
+      }
+
+      return `./${cleanParts.join("/")}`;
+    }
+
+    function resolveResourceUrl(work) {
+      if (work?.fileData) return work.fileData; // Compatibilidad con registros antiguos del navegador.
+      if (!work?.resourcePath) return "";
+      return new URL(work.resourcePath, document.baseURI).href;
+    }
+
+    function getFileNameFromPath(path) {
+      const cleanPath = String(path || "").split(/[?#]/)[0];
+      return decodeURIComponent(cleanPath.split("/").pop() || "archivo");
+    }
+
+    function inferMimeType(path) {
+      const extension = String(path || "").split(/[?#]/)[0].split(".").pop().toLowerCase();
+      const mimeTypes = {
+        pdf: "application/pdf",
+        png: "image/png",
+        jpg: "image/jpeg",
+        jpeg: "image/jpeg",
+        gif: "image/gif",
+        webp: "image/webp",
+        svg: "image/svg+xml",
+        mp4: "video/mp4",
+        webm: "video/webm",
+        mp3: "audio/mpeg",
+        wav: "audio/wav",
+        txt: "text/plain",
+        csv: "text/csv",
+        html: "text/html",
+        htm: "text/html"
+      };
+      return mimeTypes[extension] || "application/octet-stream";
+    }
+
+    function formatBytes(bytes) {
+      if (!Number.isFinite(bytes) || bytes <= 0) return "Tamaño no disponible";
+      const units = ["B", "KB", "MB", "GB"];
+      const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+      const value = bytes / Math.pow(1024, index);
+      return `${value.toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+    }
+
+    function pluralizeWorks(count) {
+      return `${count} ${count === 1 ? "trabajo" : "trabajos"}`;
+    }
+
+    function setResourceMode(mode) {
+      const isFile = mode === "file";
+      dom.fileField.hidden = !isFile;
+      dom.linkField.hidden = isFile;
+      dom.resourcePath.required = isFile;
+      dom.externalLink.required = !isFile;
+      clearFormError();
+    }
+
+    function showFormError(message) {
+      dom.formError.textContent = message;
+      dom.formError.classList.add("show");
+      dom.formError.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function clearFormError() {
+      dom.formError.textContent = "";
+      dom.formError.classList.remove("show");
+    }
+
+    function showToast(message, type = "success") {
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <span class="toast-icon" aria-hidden="true">${type === "error" ? "!" : "✓"}</span>
+        <p></p>
+      `;
+      toast.querySelector("p").textContent = message;
+      dom.toastRegion.appendChild(toast);
+
+      window.setTimeout(() => {
+        toast.remove();
+      }, 3600);
+    }
+
+    function openModal(modal, focusTarget) {
+      state.lastFocusedElement = document.activeElement;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      window.setTimeout(() => focusTarget?.focus(), 30);
+    }
+
+    function closeModal(modal) {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+
+      const anotherModalOpen = document.querySelector(".modal.open");
+      if (!anotherModalOpen) {
+        document.body.classList.remove("modal-open");
+      }
+
+      if (modal === dom.previewModal) {
+        dom.previewBody.replaceChildren();
+      }
+
+      if (state.lastFocusedElement instanceof HTMLElement) {
+        state.lastFocusedElement.focus();
+      }
+    }
+
+    function openAddModal(preselectedUnit = null) {
+      clearFormError();
+      if (preselectedUnit === "I" || preselectedUnit === "II") {
+        dom.unit.value = preselectedUnit;
+      }
+      openModal(dom.addModal, dom.title);
+    }
+
+    function resetForm() {
+      dom.workForm.reset();
+      dom.completed.checked = true;
+      setResourceMode("file");
+      clearFormError();
+    }
+
+    function trapFocus(event, modal) {
+      if (event.key !== "Tab") return;
+
+      const focusable = [...modal.querySelectorAll(
+        'button:not([disabled]), a[href], input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )].filter((element) => !element.closest("[hidden]"));
+
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    function updateStats() {
+      const total = state.works.length;
+      const completed = state.works.filter((work) => work.completed).length;
+      const percentage = total ? Math.round((completed / total) * 100) : 0;
+
+      dom.totalTasks.textContent = total;
+      dom.completedTasks.textContent = completed;
+      dom.progressText.textContent = `${percentage}%`;
+      dom.progressBar.style.width = `${percentage}%`;
+      dom.progressTrack.setAttribute("aria-valuenow", String(percentage));
+    }
+
+    function createTagElement(tagText) {
+      const li = document.createElement("li");
+      li.className = "tag";
+      li.textContent = tagText;
+      return li;
+    }
+
+    function createWorkCard(work) {
+      const article = document.createElement("article");
+      article.className = "work-card";
+      article.dataset.id = work.id;
+
+      const resourceLabel = work.resourceType === "file"
+        ? `${work.fileName || getFileNameFromPath(work.resourcePath) || "Archivo"}${work.resourcePath ? ` · ${work.resourcePath}` : (work.fileSize ? ` · ${formatBytes(work.fileSize)}` : "")}`
+        : (() => {
+            try {
+              return new URL(work.externalLink).hostname.replace(/^www\./, "");
+            } catch {
+              return "Enlace externo";
+            }
+          })();
+
+      const topLine = document.createElement("div");
+      topLine.className = "card-topline";
+
+      const code = document.createElement("span");
+      code.className = "work-code";
+      code.textContent = work.code;
+      topLine.appendChild(code);
+
+      if (work.source !== "public") {
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
+        deleteButton.type = "button";
+        deleteButton.setAttribute("aria-label", `Eliminar ${work.title}`);
+        deleteButton.dataset.action = "delete";
+        deleteButton.dataset.id = work.id;
+        deleteButton.innerHTML = icons.trash;
+        topLine.appendChild(deleteButton);
+      }
+
+      const title = document.createElement("h3");
+      title.textContent = work.title;
+
+      const description = document.createElement("p");
+      description.className = "work-description";
+      description.textContent = work.description;
+
+      const tags = document.createElement("ul");
+      tags.className = "tag-list";
+      tags.setAttribute("aria-label", "Etiquetas del trabajo");
+      const tagValues = Array.isArray(work.tags) && work.tags.length ? work.tags : ["estadística espacial"];
+      tagValues.forEach((tag) => tags.appendChild(createTagElement(tag)));
+
+      const resource = document.createElement("div");
+      resource.className = "resource-line";
+      resource.innerHTML = work.resourceType === "file" ? icons.file : icons.link;
+      const resourceText = document.createElement("span");
+      resourceText.textContent = resourceLabel;
+      resource.appendChild(resourceText);
+
+      const status = document.createElement("div");
+      status.className = `status-pill${work.completed ? "" : " pending"}`;
+      status.innerHTML = '<span class="status-dot" aria-hidden="true"></span>';
+      const statusText = document.createElement("span");
+      statusText.textContent = work.completed ? "Completado" : "En progreso";
+      status.appendChild(statusText);
+
+      const actions = document.createElement("div");
+      actions.className = "card-actions";
+
+      const mainButton = document.createElement("button");
+      mainButton.type = "button";
+      mainButton.className = "card-btn primary";
+      mainButton.dataset.id = work.id;
+
+      if (work.resourceType === "link") {
+        mainButton.dataset.action = "open-link";
+        mainButton.innerHTML = `${icons.external}<span>Abrir recurso</span>`;
+      } else {
+        mainButton.dataset.action = "preview";
+        mainButton.innerHTML = `${icons.eye}<span>Vista previa</span>`;
+      }
+
+      actions.appendChild(mainButton);
+
+      if (work.resourceType === "file") {
+        const downloadButton = document.createElement("button");
+        downloadButton.type = "button";
+        downloadButton.className = "card-btn icon-only";
+        downloadButton.dataset.action = "download";
+        downloadButton.dataset.id = work.id;
+        downloadButton.setAttribute("aria-label", `Descargar ${work.fileName || getFileNameFromPath(work.resourcePath) || work.title}`);
+        downloadButton.innerHTML = icons.download;
+        actions.appendChild(downloadButton);
+      } else {
+        const previewLinkButton = document.createElement("button");
+        previewLinkButton.type = "button";
+        previewLinkButton.className = "card-btn icon-only";
+        previewLinkButton.dataset.action = "link-preview";
+        previewLinkButton.dataset.id = work.id;
+        previewLinkButton.setAttribute("aria-label", `Mostrar información de ${work.title}`);
+        previewLinkButton.innerHTML = icons.eye;
+        actions.appendChild(previewLinkButton);
+      }
+
+      article.append(topLine, title, description, tags, resource, status, actions);
+      return article;
+    }
+
+    function renderWorks() {
+      dom.unit1Grid.replaceChildren();
+      dom.unit2Grid.replaceChildren();
+
+      const sortedWorks = [...state.works].sort((a, b) => (b.sortOrder || 0) - (a.sortOrder || 0));
+      const unit1 = sortedWorks.filter((work) => work.unit === "I");
+      const unit2 = sortedWorks.filter((work) => work.unit === "II");
+
+      unit1.forEach((work) => dom.unit1Grid.appendChild(createWorkCard(work)));
+      unit2.forEach((work) => dom.unit2Grid.appendChild(createWorkCard(work)));
+
+      dom.unit1Empty.hidden = unit1.length > 0;
+      dom.unit2Empty.hidden = unit2.length > 0;
+      dom.unit1Count.textContent = pluralizeWorks(unit1.length);
+      dom.unit2Count.textContent = pluralizeWorks(unit2.length);
+
+      updateStats();
+    }
+
+    function findWork(id) {
+      return state.works.find((work) => work.id === id);
+    }
+
+    function downloadWork(work) {
+      const resourceUrl = resolveResourceUrl(work);
+      if (!resourceUrl) {
+        showToast("La ruta del archivo no está configurada.", "error");
+        return;
+      }
+
+      const anchor = document.createElement("a");
+      anchor.href = resourceUrl;
+      anchor.download = work.fileName || getFileNameFromPath(work.resourcePath) || `${work.code}-archivo`;
+      anchor.target = "_blank";
+      anchor.rel = "noopener";
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+    }
+
+    function buildPreviewFallback(work, message) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "preview-fallback";
+
+      const content = document.createElement("div");
+      const heading = document.createElement("h3");
+      heading.textContent = work.fileName || getFileNameFromPath(work.resourcePath) || work.title;
+      const paragraph = document.createElement("p");
+      paragraph.textContent = message;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "btn btn-primary";
+      button.innerHTML = `${icons.download}<span>Abrir o descargar archivo</span>`;
+      button.addEventListener("click", () => downloadWork(work));
+
+      content.append(heading, paragraph, button);
+      wrapper.appendChild(content);
+      return wrapper;
+    }
+
+    function previewFile(work) {
+      const resourceUrl = resolveResourceUrl(work);
+      dom.previewTitle.textContent = work.title;
+      dom.previewSubtitle.textContent = work.fileName || getFileNameFromPath(work.resourcePath) || "Archivo del repositorio";
+      dom.previewBody.replaceChildren();
+
+      if (!resourceUrl) {
+        dom.previewBody.appendChild(buildPreviewFallback(work, "La ruta relativa del archivo no está configurada."));
+        openModal(dom.previewModal, dom.previewModal.querySelector("[data-close-preview]"));
+        return;
+      }
+
+      const mime = work.fileType || inferMimeType(work.resourcePath || work.fileName || "");
+      let previewElement;
+
+      if (mime.startsWith("image/")) {
+        previewElement = document.createElement("img");
+        previewElement.className = "preview-image";
+        previewElement.src = resourceUrl;
+        previewElement.alt = `Vista previa de ${work.title}`;
+      } else if (mime === "application/pdf" || mime.startsWith("text/")) {
+        previewElement = document.createElement("iframe");
+        previewElement.className = "preview-frame";
+        previewElement.src = resourceUrl;
+        previewElement.title = `Vista previa de ${work.title}`;
+      } else if (mime.startsWith("video/")) {
+        previewElement = document.createElement("video");
+        previewElement.className = "preview-video";
+        previewElement.src = resourceUrl;
+        previewElement.controls = true;
+      } else if (mime.startsWith("audio/")) {
+        const fallback = buildPreviewFallback(work, "Este archivo de audio puede reproducirse o descargarse.");
+        const audio = document.createElement("audio");
+        audio.src = resourceUrl;
+        audio.controls = true;
+        audio.style.width = "min(520px, 100%)";
+        fallback.querySelector("div").insertBefore(audio, fallback.querySelector("button"));
+        previewElement = fallback;
+      } else {
+        previewElement = buildPreviewFallback(
+          work,
+          "Este tipo de archivo no dispone de una vista previa integrada. Puedes abrirlo o descargarlo con la aplicación correspondiente."
+        );
+      }
+
+      previewElement.addEventListener?.("error", () => {
+        showToast("No se pudo cargar el archivo. Revisa la ruta, el nombre y las mayúsculas/minúsculas en GitHub.", "error");
+      }, { once: true });
+
+      dom.previewBody.appendChild(previewElement);
+      openModal(dom.previewModal, dom.previewModal.querySelector("[data-close-preview]"));
+    }
+
+    function previewExternalLink(work) {
+      dom.previewTitle.textContent = work.title;
+      dom.previewSubtitle.textContent = "Enlace externo";
+      dom.previewBody.replaceChildren();
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "preview-fallback";
+      const content = document.createElement("div");
+      const heading = document.createElement("h3");
+      heading.textContent = work.title;
+      const paragraph = document.createElement("p");
+      paragraph.textContent = work.description;
+      const link = document.createElement("a");
+      link.className = "btn btn-primary";
+      link.href = work.externalLink;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.innerHTML = `${icons.external}<span>Abrir recurso externo</span>`;
+
+      content.append(heading, paragraph, link);
+      wrapper.appendChild(content);
+      dom.previewBody.appendChild(wrapper);
+      openModal(dom.previewModal, dom.previewModal.querySelector("[data-close-preview]"));
+    }
+
+    async function handleDelete(id) {
+      const work = findWork(id);
+      if (!work) return;
+      if (work.source === "public") {
+        showToast("Este trabajo está definido en PUBLIC_WORKS. Elimínalo del código y vuelve a ejecutar git push.", "error");
+        return;
+      }
+
+      const confirmed = window.confirm(`¿Deseas eliminar “${work.title}”? Esta acción no se puede deshacer.`);
+      if (!confirmed) return;
+
+      try {
+        await removeWork(id);
+        state.works = state.works.filter((item) => item.id !== id);
+        renderWorks();
+        showToast("Trabajo eliminado correctamente.");
+      } catch (error) {
+        console.error(error);
+        showToast("No se pudo eliminar el trabajo.", "error");
+      }
+    }
+
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+      clearFormError();
+
+      const title = sanitizeText(dom.title.value);
+      const code = sanitizeText(dom.code.value);
+      const unit = dom.unit.value;
+      const description = sanitizeText(dom.description.value);
+      const tags = normalizeTags(dom.tags.value);
+      const completed = dom.completed.checked;
+      const resourceType = dom.workForm.elements.resourceType.value;
+
+      if (!title || !code || !description) {
+        showFormError("Completa el título, el código y la descripción.");
+        return;
+      }
+
+      if (!/^[A-Za-z0-9_-]+$/.test(code)) {
+        showFormError("El código solo puede contener letras, números, guion y guion bajo.");
+        return;
+      }
+
+      const duplicateCode = state.works.some((work) => work.code.toLowerCase() === code.toLowerCase());
+      if (duplicateCode) {
+        showFormError("Ya existe un trabajo con ese identificador o código.");
+        return;
+      }
+
+      const work = {
+        id: createId(),
+        title,
+        code,
+        unit,
+        description,
+        tags,
+        completed,
+        resourceType,
+        sortOrder: performance.timeOrigin + performance.now()
+      };
+
+      try {
+        dom.saveWorkBtn.disabled = true;
+        dom.saveWorkBtn.lastChild.textContent = " Guardando...";
+
+        if (resourceType === "file") {
+          work.resourcePath = normalizeResourcePath(dom.resourcePath.value);
+          work.fileName = getFileNameFromPath(work.resourcePath);
+          work.fileType = inferMimeType(work.resourcePath);
+        } else {
+          const rawLink = sanitizeText(dom.externalLink.value);
+          if (!rawLink) {
+            throw new Error("Ingresa un enlace externo.");
+          }
+          work.externalLink = normalizeUrl(rawLink);
+        }
+
+        await saveWork(work);
+        state.works.push(work);
+        renderWorks();
+        closeModal(dom.addModal);
+        resetForm();
+        showToast("Trabajo guardado como vista previa local. Para publicarlo para todos, agrégalo a PUBLIC_WORKS y ejecuta git push.");
+
+        document.getElementById(work.unit === "I" ? "unidad-1" : "unidad-2")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      } catch (error) {
+        console.error(error);
+        const quotaMessage = error?.name === "QuotaExceededError"
+          ? "El navegador no tiene espacio suficiente para guardar este archivo. Prueba con un archivo más pequeño o libera almacenamiento del sitio."
+          : error.message || "No se pudo guardar el trabajo.";
+        showFormError(quotaMessage);
+      } finally {
+        dom.saveWorkBtn.disabled = false;
+        dom.saveWorkBtn.innerHTML = `
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Agregar trabajo
+        `;
+      }
+    }
+
+    function handleGridClick(event) {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+
+      const work = findWork(button.dataset.id);
+      if (!work) return;
+
+      switch (button.dataset.action) {
+        case "delete":
+          handleDelete(work.id);
+          break;
+        case "preview":
+          previewFile(work);
+          break;
+        case "download":
+          downloadWork(work);
+          break;
+        case "open-link":
+          window.open(work.externalLink, "_blank", "noopener,noreferrer");
+          break;
+        case "link-preview":
+          previewExternalLink(work);
+          break;
+      }
+    }
+
+    function bindEvents() {
+      document.querySelectorAll("[data-open-add]").forEach((button) => {
+        button.addEventListener("click", () => openAddModal(button.dataset.unit || null));
+      });
+
+      document.querySelectorAll("[data-close-add]").forEach((button) => {
+        button.addEventListener("click", () => closeModal(dom.addModal));
+      });
+
+      document.querySelectorAll("[data-close-preview]").forEach((button) => {
+        button.addEventListener("click", () => closeModal(dom.previewModal));
+      });
+
+      document.querySelectorAll('input[name="resourceType"]').forEach((radio) => {
+        radio.addEventListener("change", () => setResourceMode(radio.value));
+      });
+
+
+      dom.workForm.addEventListener("submit", handleFormSubmit);
+      dom.unit1Grid.addEventListener("click", handleGridClick);
+      dom.unit2Grid.addEventListener("click", handleGridClick);
+
+      [dom.addModal, dom.previewModal].forEach((modal) => {
+        modal.addEventListener("mousedown", (event) => {
+          if (event.target === modal) closeModal(modal);
+        });
+        modal.addEventListener("keydown", (event) => trapFocus(event, modal));
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (dom.previewModal.classList.contains("open")) {
+          closeModal(dom.previewModal);
+        } else if (dom.addModal.classList.contains("open")) {
+          closeModal(dom.addModal);
+        }
+      });
+    }
+
+    async function init() {
+      bindEvents();
+      setResourceMode("file");
+
+      const publicWorks = PUBLIC_WORKS.map((work, index) => ({
+        ...work,
+        id: work.id || `public-${index + 1}`,
+        source: "public",
+        sortOrder: Number.isFinite(work.sortOrder) ? work.sortOrder : PUBLIC_WORKS.length - index
+      }));
+
+      if (!("indexedDB" in window)) {
+        state.works = publicWorks;
+        renderWorks();
+        showToast("El navegador no admite almacenamiento local. Los trabajos públicos sí están disponibles.", "error");
+        return;
+      }
+
+      try {
+        state.db = await openDatabase();
+        const localWorks = (await getAllWorks()).map((work) => ({ ...work, source: "local" }));
+        const publicIds = new Set(publicWorks.map((work) => work.id));
+        state.works = [...publicWorks, ...localWorks.filter((work) => !publicIds.has(work.id))];
+        renderWorks();
+      } catch (error) {
+        console.error(error);
+        state.works = publicWorks;
+        renderWorks();
+        showToast("No se pudo iniciar el almacenamiento local; se muestran los trabajos publicados en el código.", "error");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>
