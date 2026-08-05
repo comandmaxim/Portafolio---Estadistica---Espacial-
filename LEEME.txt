@@ -1,0 +1,22 @@
+PORTAFOLIO GITHUB PAGES — UNIDADES I Y II
+
+1. Sube todo el contenido de esta carpeta a la raíz del repositorio:
+   index.html
+   Unidad_I/
+   Unidad_II/
+
+2. En index.html, busca al inicio del JavaScript:
+   const GITHUB_USER = "tu-usuario";
+   const GITHUB_REPO = "tu-repositorio";
+   const GITHUB_BRANCH = "main";
+
+3. Reemplaza el usuario y repositorio. En una URL normal de GitHub Pages, el código también intenta detectarlos automáticamente.
+
+4. Para agregar nuevos documentos:
+   - Unidad I: subir a /Unidad_I
+   - Unidad II: subir a /Unidad_II
+   - Confirmar el commit.
+
+5. No agregues tokens personales de GitHub al HTML. La API usada es pública y solo consulta repositorios públicos.
+
+6. Los archivos fijos ya incluidos se muestran aunque la API no esté configurada o alcance temporalmente su límite público.
